@@ -31,7 +31,6 @@
     "supertest": "*",
     "request": "*",
     "supervisor": "*",
-    "docco-husky": "*",
     "puts": "*",
     "node-inspector": "*",
     "ejs": "*"
