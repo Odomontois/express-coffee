@@ -57,7 +57,7 @@ task 'docs', 'Generate annotated source code with Docco', ->
   files = ("src/#{file}" for file in files when /\.coffee$/.test file)
   log files
   try
-    cmd ='./node_modules/.bin/docco-husky' 
+    cmd = './node_modules/.bin/docco-husky' 
     docco = spawn cmd, files
     docco.stdout.pipe process.stdout
     docco.stderr.pipe process.stderr
@@ -88,7 +88,7 @@ task 'dev', 'start dev env', ->
   supervisor = spawn 'node', [
     './node_modules/supervisor/lib/cli-wrapper.js',
     '-w',
-    '.app,views', 
+    '.app,views,assets', 
     '-e', 
     'js|jade', 
     'server'

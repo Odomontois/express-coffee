@@ -2,7 +2,6 @@
 head
 	title Some calc
 	!= css('calc')
-	!= js('lib/require')
 	!= js('somecalc')
 body
 	p Dice:
@@ -18,4 +17,3 @@ body
 			tr(data-bind="foreach: list")
 				td(data-bind="text: points")
 				td(data-bind="text: value")
-
