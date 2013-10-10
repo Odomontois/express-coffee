@@ -1,19 +1,22 @@
 !!! 5
 head
 	title Some calc
-	!= css('calc')
 	!= js('somecalc')
 body
-	p Dice:
-		input(data-bind="value: dice")
-	p Count:
-		input(data-bind="value: count")
-	table
-		thead
+	p 
+		span Dice:
+			input(data-bind="value: dice")
+		span Count:
+			input(data-bind="value: count")
+	table(border="1")
+		tbody
 			tr
 				th Points
-				th Probability
-		tbody
-			tr(data-bind="foreach: list")
+				// ko foreach: list
 				td(data-bind="text: points")
-				td(data-bind="text: value")
+				// /ko
+			tr
+				th Probability
+				// ko foreach: list
+				td(data-bind="text: value.toExponential(2)")
+				// /ko

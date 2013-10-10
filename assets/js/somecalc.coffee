@@ -1,5 +1,5 @@
-#= require /lib/jquery
-#= require /lib/knockout
+#= require lib/jquery
+#= require lib/knockout
 
 class CalcViewModel
 	constructor:  ->
