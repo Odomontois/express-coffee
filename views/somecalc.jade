@@ -1,7 +1,8 @@
 !!! 5
 head
 	title Some calc
-	!= js('somecalc')
+	script(type="text/javascript",src="https://www.google.com/jsapi")
+	!= js('somecalc')	
 body
 	p 
 		span Dice:
@@ -20,3 +21,4 @@ body
 				// ko foreach: list
 				td(data-bind="text: value.toExponential(2)")
 				// /ko
+	#chart_div(data-bind="googleChart: list",style="width: 60%; height: 50%;")
