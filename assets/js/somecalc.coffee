@@ -23,7 +23,7 @@ class CalcViewModel
 	chart:
 		format: 
 			points: "Points"
-			value:"Probability"
+			value: "Probability"
 		title: "Dice Probability"
 
 
