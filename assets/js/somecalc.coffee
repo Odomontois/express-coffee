@@ -1,5 +1,6 @@
 #= require lib/jquery
 #= require lib/knockout
+#= require lib/koGoogleChart
 
 class CalcViewModel
 	constructor:  ->
@@ -19,17 +20,15 @@ class CalcViewModel
 		r[i+j]+=x*y for x,i in a for y,j in b
 		# console.log a,b,r
 		r
+	chart:
+		format: 
+			points: "Points"
+			value:"Probability"
+		title: "Dice Probability"
 
-$ -> 
-	ko.applyBindings new CalcViewModel()
+
+$ -> ko.applyBindings new CalcViewModel()
 
 google.load "visualization", "1",  packages:["corechart"]
 
-ko.bindingHandlers.googleChart = 
-	update: (element,accessor)->
-		list = ko.unwrap accessor()
-		data = google.visualization.arrayToDataTable [['Points', 'Probability']].concat([i.points,i.value] for i in list)
-		# console.log data	     
-		options = title: 'Dice Probability'
-		chart = new google.visualization.LineChart element
-		chart.draw data, options
+

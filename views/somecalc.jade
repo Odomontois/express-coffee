@@ -21,4 +21,4 @@ body
 				// ko foreach: list
 				td(data-bind="text: value.toExponential(2)")
 				// /ko
-	#chart_div(data-bind="googleChart: list",style="width: 60%; height: 50%;")
+	#chart_div(data-bind="googleChart: list, title: chart.title, format: chart.format",style="width: 60%; height: 50%;")
