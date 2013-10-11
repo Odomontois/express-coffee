@@ -5,7 +5,7 @@
 class CalcViewModel
 	constructor:  ->
 		@dice = ko.observable 6 
-		@count = ko.observable 6
+		@count = ko.observable 3
 		@list = ko.computed => 
 			count = parseInt @count()
 			dice = parseInt @dice()
