@@ -1,25 +1,26 @@
-!!! 5
-head
+extends baseview
+block head
 	title Some calc
 	script(type="text/javascript",src="https://www.google.com/jsapi")
-	!= js('somecalc')	
-body
-	p 
-		span Dice:
-			input(data-bind="value: dice")
-		span Count:
-			input(data-bind="value: count")
-	div(style="overflow:auto;width:80%")			
-		table(border="1")
-			tbody
-				tr
-					th Points
-					// ko foreach: list
-					td(data-bind="text: points")
-					// /ko
-				tr
-					th Probability
-					// ko foreach: list
-					td(data-bind="text: value.toExponential(2)")
-					// /ko
-	#chart_div(data-bind="googleChart: list, title: chart.title, format: chart.format",style="width: 60%; height: 50%;")
+	!=js('somecalc')	
+	!=css('somecalc')
+block body
+		.input-group.nums-panel
+			span.input-group-addon Dice:
+			input.form-control(data-bind="value: dice")
+			span.input-group-addon Count:
+			input.form-control(data-bind="value: count")
+		div(style="overflow:auto;width:80%")			
+			table.table.data-tab(border="1")
+				tbody
+					tr
+						th Points
+						// ko foreach: list
+						td(data-bind="text: points")
+						// /ko
+					tr
+						th Probability
+						// ko foreach: list
+						td(data-bind="text: value.toExponential(2)")
+						// /ko
+		#chart_div(data-bind="googleChart: list, title: chart.title, format: chart.format",style="width: 60%; height: 50%;")

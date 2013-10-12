@@ -1,5 +1,3 @@
-#= require lib/jquery
-#= require lib/knockout
 #= require lib/koGoogleChart
 
 class CalcViewModel

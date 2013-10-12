@@ -1,0 +1,8 @@
+!!! 5
+head
+	meta(charset="utf-8")
+	!=css("quiz")
+	!=js("lib/knockout")
+	!=js("lib/jquery")
+	!=js("lib/bootstrap.min")
+	!=js("quiz")
