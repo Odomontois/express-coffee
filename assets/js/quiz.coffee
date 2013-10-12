@@ -1,5 +1,5 @@
 class Quiz
-	constructor:(@model, @id,@new,header = "New Quiz",text = "Hello", edit = false)->
+	constructor:(@model, @id,@new, edit = false ,header = "New Quiz",text = "Hello")->
 		@header = ko.observable header
 		@text = ko.observable text
 		@edit = ko.observable edit
@@ -12,7 +12,7 @@ class Quiz
 			header: @header()
 			text: @text()
 		if @new
-			$.post "/quizes/create", data, (quiz)->
+			$.post "/quizes/create", data, (quiz)=>
 				@new = false
 				@id = quiz._id
 			,"json"
@@ -31,9 +31,9 @@ class QuizViewModel
 		@quizes = ko.observableArray()
 		@quiz = 
 			id:0
-			add: =>	@quizes.push new Quiz  this, @quiz.id++,true
+			add: =>	@quizes.push new Quiz  this, @quiz.id++,true,true
 		$.get '/quizes/index',(quizes) =>
-			@quizes (new Quiz(this, quiz._id, false, quiz.header, quiz.text) for quiz in quizes)
+			@quizes (new Quiz(this, quiz._id, false, false, quiz.header, quiz.text) for quiz in quizes)
 
 $ -> 
 	ko.applyBindings new QuizViewModel

@@ -4,6 +4,25 @@ mongoose = require 'mongoose'
 Quiz = new mongoose.Schema(
   header: String
   text: String
+  questions: [
+  	text: String
+  	answers: [
+  		text: String
+  		points: [
+  			dim: String
+  			value: Number
+  		]
+  	]
+  ]
+  dimensions:[String]
+  results:[
+  	title: String
+  	areas:[
+  		dim:String
+  		low:Number
+  		high:Number
+  	]
+  ]
 )
 
 module.exports = mongoose.model 'Quiz', Quiz
