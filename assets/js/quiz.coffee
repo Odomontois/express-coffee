@@ -12,16 +12,17 @@ class Quiz
 			header: @header()
 			text: @text()
 		if @new
-			$.post "/quizes/create", data, (quiz)->
+			$.ajax "/quizes/create", data, (quiz)->
 				@new = false
 				@id = quiz._id
+			,"json"
 		else
-			$.post "/quizes/update/#{@id}",data
+			$.post "/quizes/update/#{@id}",data,null,"json"
 	remove: =>
 		if @new 
 			@model.quizes.remove this
 		else
-			$.post "/quizes/delete/#{@id}",{}, => @model.quizes.remove this
+			$.post "/quizes/delete/#{@id}",{}, (=> @model.quizes.remove this),"json"
 
 
 
