@@ -1,0 +1,27 @@
+!!! 5
+head
+	meta(charset="utf-8")
+	title Quiz Manager
+	!=css("quiz")
+	!=js("lib/knockout")
+	!=js("lib/jquery")
+	!=js("lib/bootstrap.min")
+	!=js("quiz")
+
+body
+	#quizes(data-bind="foreach: quizes")
+		.panel.panel-info
+			.panel-heading
+				span(data-bind="if:editTitle")
+					input(data-bind="value: header")
+					span.glyphicon.glyphicon-ok-circle.panel-control(data-bind="click: enableEdit(false)")
+					span.glyphicon.glyphicon-remove.panel-control(data-bind="click: $root.quiz.remove")		
+				span(data-bind="if:editTitle()==false")		
+					a.panel-title(data-bind="text: header, attr:{href : '#'+id}",data-toggle="collapse",data-parent="#quizes")				
+					span.glyphicon.glyphicon-edit.panel-control(data-bind="click: enableEdit(true)")		
+				
+			.panel-collapse.collapse(data-bind="attr:{id:id}")
+				.panel-body						
+					p(data-bind="text: text")
+	button.btn.btn-info(data-bind="click: quiz.add") Add
+
