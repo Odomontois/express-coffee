@@ -12,7 +12,7 @@ class Quiz
 			header: @header()
 			text: @text()
 		if @new
-			$.ajax "/quizes/create", data, (quiz)->
+			$.post "/quizes/create", data, (quiz)->
 				@new = false
 				@id = quiz._id
 			,"json"
