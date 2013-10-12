@@ -26,7 +26,7 @@ describe 'Quiz', ->
       
   it "should be created", (done) ->
     request(app)
-      .post("/quizs/create")
+      .post("/quizes/create")
       .send(INITIAL_DATA)
       .expect 201, (err, res) ->
         res.body.should.include(INITIAL_DATA)
@@ -37,7 +37,7 @@ describe 'Quiz', ->
         
   it "should be accessible by id", (done) ->
     request(app)
-      .get("/quizs/get/#{quiz_id}")
+      .get("/quizes/get/#{quiz_id}")
       .expect 200, (err, res) ->
         res.body.should.include(INITIAL_DATA)
         res.body.should.have.property "_id"
@@ -46,7 +46,7 @@ describe 'Quiz', ->
         
   it "should be listed in list", (done) ->
     request(app)
-      .get("/quizs")
+      .get("/quizes")
       .expect 200, (err, res) ->
         res.body.should.be.an.instanceof Array
         res.body.should.have.length 1
@@ -55,7 +55,7 @@ describe 'Quiz', ->
     
   it "should be updated", (done) ->
     request(app)
-      .post("/quizs/update/#{quiz_id}")
+      .post("/quizes/update/#{quiz_id}")
       .send(UPDATED_DATA)
       .expect 200, (err, res) ->
         res.body.should.include(UPDATED_DATA)
@@ -63,7 +63,7 @@ describe 'Quiz', ->
         
   it "should be persisted after update", (done) ->
     request(app)
-      .get("/quizs/get/#{quiz_id}")
+      .get("/quizes/get/#{quiz_id}")
       .expect 200, (err, res) ->
         res.body.should.include(UPDATED_DATA)
         res.body.should.have.property "_id"
@@ -72,13 +72,13 @@ describe 'Quiz', ->
   
   it "should be removed", (done) ->
     request(app)
-      .del("/quizs/delete/#{quiz_id}")
+      .del("/quizes/delete/#{quiz_id}")
       .expect 200, (err, res) ->
         done()
     
   it "should not be listed after remove", (done) ->
     request(app)
-      .get("/quizs")
+      .get("/quizes")
       .expect 200, (err, res) ->
         res.body.should.be.an.instanceof Array
         res.body.should.have.length 0
