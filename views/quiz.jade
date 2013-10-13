@@ -8,14 +8,27 @@ block body
 		.panel.panel-info
 			.panel-heading
 				span(data-bind="if:edit")
-					input(data-bind="value: header")
-					span.glyphicon.glyphicon-ok-circle.panel-control(data-bind="click: enableEdit(false)")
-					span.glyphicon.glyphicon-remove.panel-control(data-bind="click: remove")		
+					input(data-bind="value: title")
+					a.glyphicon.glyphicon-ok-circle.panel-control(data-bind="click: enableEdit(false)")
+					a.glyphicon.glyphicon-remove.panel-control(data-bind="attr:{href:'#quiz_remove'+id}",data-toggle="modal")		
 				span(data-bind="if:edit()==false")		
-					a.panel-title(data-bind="text: header, attr:{href : '#'+id}",data-toggle="collapse",data-parent="#quizes")				
-					span.glyphicon.glyphicon-edit.panel-control(data-bind="click: enableEdit(true)")		
+					a.panel-title(data-bind="text: title, attr:{href : '#quiz_'+id}",data-toggle="collapse",data-parent="#quizes")				
+					a.glyphicon.glyphicon-edit.panel-control(data-bind="click: enableEdit(true)")
+
+				.modal.fade(data-bind="attr:{id:'quiz_remove'+id}",tabindex=-1,role="dialog",aria-hidden="true")
+					.modal-dialog
+						.modal-content
+							.modal-body
+								button.close(type="button",data-dismiss="modal",aria-hidden="true")&times;
+								h4.modal-title 
+									|Really remove&nbsp;
+									b(data-bind="text:title")
+									|&nbsp;?
+							.modal-footer
+								button.btn.btn-default(type="button",data-dismiss="modal") Close
+								button.btn.btn-warning(type="button",data-bind="click:remove",data-dismiss="modal") Remove	
 				
-			.panel-collapse.collapse(data-bind="attr:{id:id}")
+			.panel-collapse.collapse(data-bind="attr:{id:'quiz_'+id}")
 				.panel-body						
 					textarea(data-bind="value: text,enable: edit")
 	button.btn.btn-info(data-bind="click: quiz.add") Add

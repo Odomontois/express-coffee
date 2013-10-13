@@ -2,7 +2,7 @@ mongoose = require 'mongoose'
 
 # Quiz model
 Quiz = new mongoose.Schema(
-  header: String
+  title: String
   text: String
   questions: [
   	text: String

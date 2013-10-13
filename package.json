@@ -33,7 +33,9 @@
     "supervisor": "*",
     "puts": "*",
     "node-inspector": "*",
-    "ejs": "*"
+    "ejs": "*",
+    "chai": "*",
+    "chai-things": "*"
 	}, 
 	"engines": {
 		"node": "~0.10.x",

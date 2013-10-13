@@ -5,23 +5,17 @@ app = require process.cwd() + '/.app'
 
 
 INITIAL_DATA = {
-  "header":"Some Data"
+  "title":"Some Data"
   "text": """Some Text
             line
             another Line"""
 }
 
 UPDATED_DATA = {
-  "header":"Another data"
+  "title":"Another data"
 }
 
-cleanDB = (done) ->
-  Quiz.remove {}, ->
-    done()
-
 describe 'Quiz', ->
-  before cleanDB
-  
   quiz_id = null
       
   it "should be created", (done) ->
@@ -83,6 +77,4 @@ describe 'Quiz', ->
         res.body.should.be.an.instanceof Array
         res.body.should.have.length 0
         done()
-        
-  after cleanDB
       
