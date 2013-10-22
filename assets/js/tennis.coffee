@@ -11,6 +11,10 @@ class Point
 		@_addComp @x, point.x
 		@_addComp @y, point.y
 	toString: -> "(#{@x()},#{@y()})"
+	plain: -> 
+		x: @x()
+		y: @y()
+Point.make = (point)-> new Point point.x, point.y
 
 class ButtonState
 	constructor:(@text, @className,@running,@board,@next)->
@@ -36,17 +40,27 @@ class DrawBoard
 		@context().fill()
 
 class TennisBoard
-	constructor: (@id)->
-		@size    = ko.observable new Point 600, 400
-		@pos  	 = ko.observable new Point 40,40 
-		@move 	 = ko.observable new Point 1,1
-		@interval= ko.observable 1000
-		@running = ko.observable false
-		@radius	 = ko.observable 20
+	constructor: (@id,board)->
+		unless board?
+			@size     = ko.observable new Point 600, 400
+			@pos      = ko.observable new Point 40,40 
+			@move     = ko.observable new Point 1,1
+			@interval = ko.observable 1000
+			@running  = ko.observable false
+			@radius   = ko.observable 20
+		else
+			@size     = ko.observable Point.make board.size
+			@pos      = ko.observable Point.make board.pos
+			@move     = ko.observable Point.make board.move
+			@interval = ko.observable board.interval
+			@running  = ko.observable true
+			@radius   = ko.observable board.radius
+
 		@buttonStates =
 			stopped: new ButtonState "Run" , "btn-warning", false, this, ->@running
 			running: new ButtonState "Stop", "btn-info"   , true , this, ->@stopped
 		@buttonState = ko.observable @buttonStates.stopped
+
 		@stepDraw = =>
 			@draw.clear()
 			@draw.circle(@pos,@radius) 
@@ -66,12 +80,30 @@ class TennisBoard
 		if  ((move < 0) and (pos <= radius) ) or
 			((move > 0) and ((pos + radius) >= size))
 				@move()[dim]( - move)
+	plain: ->
+		pos: @pos().plain()
+		move: @move().plain()
+		size: @size().plain()
+		interval: @interval()
+		radius: @radius()
 
 class TennisViewModel
-	constructor: ->
-		@boards = (new TennisBoard i for i in [1,2])
+	constructor: (tennis)->
+		@link = ko.observable()
+		if tennis? 
+			@boards = (new TennisBoard i,board for board,i in tennis.boards) 
+			@link @getLink tennis._id
+		else @boards = (new TennisBoard i for i in [1,2])
+	dump: -> 
+		data = boards: (board.plain() for board in @boards)
+		$.post '/tennis/dump', data, ((id)=> @link @getLink id), "json"
+	getLink: (id)-> "#{location.protocol}//#{location.host}/tennis/view/#{id}"
 
-$ -> ko.applyBindings new TennisViewModel()
+
+
+$ ->
+	if tennisDbId? then $.get "/tennis/load/#{tennisDbId}",(tennis) -> ko.applyBindings new TennisViewModel tennis
+	else ko.applyBindings new TennisViewModel()
 
 
 

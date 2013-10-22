@@ -24,6 +24,7 @@ if process.env.MONGOHQ_URL?
 	
 if app.settings.env != 'production'
   mongoose.connect 'mongodb://localhost/example'
+  app.set 'view options', pretty:true
 else
   console.log('If you are running in production, you may want to modify the mongoose connect path')
 

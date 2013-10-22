@@ -10,29 +10,37 @@ mixin coord-input(name,acc)
 				block
 block head
 	!=js("tennis")
+	if dbId != null
+		script(type="text/javascript").
+			window.tennisDbId = "#{dbId}";
 block body
 	table: tr(data-bind="foreach: boards")
 		td(valign="top")
 			.panel.panel-default
-				.panel-body
-					+coord-input("Size","size")
-						span.input-group-addon Radius:
-						input.form-control(data-bind="value: $parent.radius")
-					+coord-input("Position","pos")
-					+coord-input("Movement","move")
-					p: span.input-group
-						span.input-group-addon Tick every
-						input.form-control(data-bind="value: interval")
-						span.input-group-addon milliseconds
-						// ko with: buttonState
-						button(data-bind="text: text, css: css(), click: toggle")
-						// /ko
-					span(data-bind="text:size()")
-					span(data-bind="text:pos()")
-					span(data-bind="text:move()")
-
+				if dbId == null
+					.panel-body
+						+coord-input("Size","size")
+							span.input-group-addon Radius:
+							input.form-control(data-bind="value: $parent.radius")
+						+coord-input("Position","pos")
+						+coord-input("Movement","move")
+						.input-group.input-prepend.input-append
+							span.input-group-addon Tick every
+							input.form-control(data-bind="value: interval")
+							span.input-group-addon milliseconds
+							// ko with: buttonState
+							button(data-bind="text: text, css: css(), click: toggle")
+							// /ko
+						span(data-bind="text:size()")
+						span(data-bind="text:pos()")
+						span(data-bind="text:move()")
 				.panel-footer(data-bind="tick:stepDraw, interval: interval, running: running")
 					canvas(data-bind="attr:{id:canvasId()}, canvasSize: {x: size().x, y:size().y}")
+	if dbId == null
+		.input-prepend.input-append
+			button.btn.btn-default(data-bind="click:dump",) Dump this!
+			input.text(data-bind="value: link", style="width:50%",disabled)
+
 
 
 
