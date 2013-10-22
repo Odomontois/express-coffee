@@ -1,0 +1,39 @@
+extends baseview
+mixin coord-input(name,acc)
+	p
+		.input-group(data-bind="with:#{acc}")
+			span.input-group-addon #{name} X:
+			input.form-control(data-bind="value: x")
+			span.input-group-addon Y:
+			input.form-control(data-bind="value: y")
+			if block
+				block
+block head
+	!=js("tennis")
+block body
+	table: tr(data-bind="foreach: boards")
+		td(valign="top")
+			.panel.panel-default
+				.panel-body
+					+coord-input("Size","size")
+						span.input-group-addon Radius:
+						input.form-control(data-bind="value: $parent.radius")
+					+coord-input("Position","pos")
+					+coord-input("Movement","move")
+					p: span.input-group
+						span.input-group-addon Tick every
+						input.form-control(data-bind="value: interval")
+						span.input-group-addon milliseconds
+						// ko with: buttonState
+						button(data-bind="text: text, css: css(), click: toggle")
+						// /ko
+					span(data-bind="text:size()")
+					span(data-bind="text:pos()")
+					span(data-bind="text:move()")
+
+				.panel-footer(data-bind="tick:stepDraw, interval: interval, running: running")
+					canvas(data-bind="attr:{id:canvasId()}, canvasSize: {x: size().x, y:size().y}")
+
+
+
+
