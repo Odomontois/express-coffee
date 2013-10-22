@@ -3,28 +3,29 @@ mixin coord-input(name,acc)
 	p
 		.input-group(data-bind="with:#{acc}")
 			span.input-group-addon #{name} X:
-			input.form-control(data-bind="value: x")
+			input.form-control.db(data-bind="value: x")
 			span.input-group-addon Y:
-			input.form-control(data-bind="value: y")
+			input.form-control.db(data-bind="value: y")
 			if block
 				block
 block head
 	!=js("tennis")
 	databaseId(hidden)= dbId
+
 block body
 	table: tr(data-bind="foreach: boards")
 		td(valign="top")
 			.panel.panel-default
-				if dbId == null
+				if showControl
 					.panel-body
 						+coord-input("Size","size")
 							span.input-group-addon Radius:
-							input.form-control(data-bind="value: $parent.radius")
+							input.form-control.db(data-bind="value: $parent.radius")
 						+coord-input("Position","pos")
 						+coord-input("Movement","move")
 						.input-group.input-prepend.input-append
 							span.input-group-addon Tick every
-							input.form-control(data-bind="value: interval")
+							input.form-control.db(data-bind="value: interval")
 							span.input-group-addon milliseconds
 							// ko with: buttonState
 							button(data-bind="text: text, css: css(), click: toggle")
@@ -32,7 +33,7 @@ block body
 						span(data-bind="text:size()")
 						span(data-bind="text:pos()")
 						span(data-bind="text:move()")
-				.panel-footer(data-bind="tick:stepDraw, interval: interval, running: running")
+				.panel-footer(data-bind="tick:stepDraw, interval: interval, running: buttonState().running")
 					canvas(data-bind="attr:{id:canvasId()}, canvasSize: {x: size().x, y:size().y}")
 	if dbId == null
 		.input-prepend.input-append

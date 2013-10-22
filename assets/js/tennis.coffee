@@ -41,25 +41,27 @@ class DrawBoard
 
 class TennisBoard
 	constructor: (@id,board)->
+		@buttonStates =
+			stopped: new ButtonState "Run" , "btn-warning", false, this, ->@running
+			running: new ButtonState "Stop", "btn-info"   , true , this, ->@stopped
+
 		unless board?
 			@size     = ko.observable new Point 600, 400
 			@pos      = ko.observable new Point 40,40 
 			@move     = ko.observable new Point 1,1
 			@interval = ko.observable 1000
-			@running  = ko.observable false
+			@buttonState = ko.observable @buttonStates.stopped
 			@radius   = ko.observable 20
 		else
 			@size     = ko.observable Point.make board.size
 			@pos      = ko.observable Point.make board.pos
 			@move     = ko.observable Point.make board.move
 			@interval = ko.observable board.interval
-			@running  = ko.observable true
+			@buttonState = ko.observable @buttonStates.running
 			@radius   = ko.observable board.radius
 
-		@buttonStates =
-			stopped: new ButtonState "Run" , "btn-warning", false, this, ->@running
-			running: new ButtonState "Stop", "btn-info"   , true , this, ->@stopped
-		@buttonState = ko.observable @buttonStates.stopped
+
+		
 
 		@stepDraw = =>
 			@draw.clear()
@@ -103,7 +105,9 @@ class TennisViewModel
 
 $ ->
 	dbId = $("databaseId").text()
-	unless dbId == "" then $.get "/tennis/load/#{dbId}",(tennis) -> ko.applyBindings new TennisViewModel tennis
+	unless dbId == "" 
+		$(".db").attr("disabled",true)
+		$.get "/tennis/load/#{dbId}",(tennis) -> ko.applyBindings new TennisViewModel tennis
 	else ko.applyBindings new TennisViewModel()
 
 

@@ -1,7 +1,9 @@
 Tennis = require "../models/tennis"
 
 module.exports =
-	index:(req,res)-> res.render 'tennis', dbId:null
+	index:(req,res)-> res.render 'tennis', 
+		dbId:null
+		showControl:true
 	dump: (req,res)-> 
 		tennis = new Tennis req.body
 		tennis.save (err, tennis)->
@@ -19,4 +21,9 @@ module.exports =
 			else
 				res.send err
 				res.statusCode = 500
-	view:(req,res)-> res.render 'tennis', dbId:req.params.id
+	view:(req,res)-> res.render 'tennis', 
+		dbId:req.params.id
+		showControl:false
+	full:(req,res)-> res.render 'tennis',
+		dbId:req.params.id
+		showControl:true
