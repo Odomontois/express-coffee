@@ -10,9 +10,7 @@ mixin coord-input(name,acc)
 				block
 block head
 	!=js("tennis")
-	if dbId != null
-		script(type="text/javascript").
-			window.tennisDbId = "#{dbId}";
+	databaseId(hidden)= dbId
 block body
 	table: tr(data-bind="foreach: boards")
 		td(valign="top")
@@ -40,8 +38,3 @@ block body
 		.input-prepend.input-append
 			button.btn.btn-default(data-bind="click:dump",) Dump this!
 			input.text(data-bind="value: link", style="width:50%",disabled)
-
-
-
-
-

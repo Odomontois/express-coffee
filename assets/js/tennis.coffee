@@ -102,7 +102,8 @@ class TennisViewModel
 
 
 $ ->
-	if tennisDbId? then $.get "/tennis/load/#{tennisDbId}",(tennis) -> ko.applyBindings new TennisViewModel tennis
+	dbId = $("databaseId").text()
+	unless dbId == "" then $.get "/tennis/load/#{dbId}",(tennis) -> ko.applyBindings new TennisViewModel tennis
 	else ko.applyBindings new TennisViewModel()
 
 
